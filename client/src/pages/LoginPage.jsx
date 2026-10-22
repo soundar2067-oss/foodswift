@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Lock, Mail, User, Phone, Sparkles, UtensilsCrossed, ShieldCheck, Bike, ArrowRight, Shield, ChevronDown } from 'lucide-react';
+import { Lock, Mail, User, Phone, Sparkles, UtensilsCrossed, ShieldCheck, Bike, ArrowRight, Shield, ChevronDown, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function LoginPage({ initialMode = 'login' }) {
@@ -16,6 +16,7 @@ export default function LoginPage({ initialMode = 'login' }) {
   const [mode, setMode] = useState(initialMode); // 'login' | 'register'
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [dietaryPreference, setDietaryPreference] = useState('any');
@@ -168,13 +169,25 @@ export default function LoginPage({ initialMode = 'login' }) {
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3 pointer-events-none" />
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 required
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-slate-50 text-xs pl-10 pr-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-brand-500"
+                className="w-full bg-slate-50 text-xs pl-10 pr-10 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-brand-500"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 transition-colors p-0.5 focus:outline-none cursor-pointer"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? (
+                  <EyeOff className="w-4 h-4" />
+                ) : (
+                  <Eye className="w-4 h-4" />
+                )}
+              </button>
             </div>
           </div>
 

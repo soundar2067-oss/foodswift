@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { ChefHat, Mail, Lock, User as UserIcon, MapPin, ArrowRight, Shield } from 'lucide-react';
+import { ChefHat, Mail, Lock, User as UserIcon, MapPin, ArrowRight, Shield, Eye, EyeOff } from 'lucide-react';
 
 const LoginRegister = ({ setActivePage, redirectMessage, setRedirectMessage }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState('');
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState('customer');
   const [address, setAddress] = useState('');
   const [formError, setFormError] = useState('');
@@ -210,14 +211,34 @@ const LoginRegister = ({ setActivePage, redirectMessage, setRedirectMessage }) =
                 <Lock size={18} />
               </span>
               <input 
-                type="password" 
+                type={showPassword ? 'text' : 'password'} 
                 className="form-control" 
                 placeholder="••••••••" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                style={{ paddingLeft: '44px' }}
+                style={{ paddingLeft: '44px', paddingRight: '44px' }}
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                style={{
+                  position: 'absolute',
+                  right: '12px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: 0
+                }}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
           </div>
 

@@ -306,7 +306,7 @@ const DISH_IMAGE_RULES = [
   },
   {
     pattern: /jalebi|rabdi|mysore pak|kaju katli|laddu|ladoo/i,
-    image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=600&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80',
   },
   {
     pattern: /jamun|halwa|payasam|kheer|gulab jamun|rasgulla|rasmalai/i,
