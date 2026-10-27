@@ -65,10 +65,10 @@ export const AuthProvider = ({ children }) => {
     const lowerEmail = (email || 'guest@foodswift.com').toLowerCase();
     const role = lowerEmail.includes('admin')
       ? 'admin'
-      : lowerEmail.includes('delivery')
-      ? 'delivery_partner'
+      : lowerEmail.includes('delivery') || lowerEmail.includes('rider')
+      ? 'delivery'
       : lowerEmail.includes('partner') || lowerEmail.includes('restaurant')
-      ? 'restaurant_owner'
+      ? 'restaurant'
       : 'customer';
 
     const fallbackUser = {

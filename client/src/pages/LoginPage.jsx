@@ -241,38 +241,73 @@ export default function LoginPage({ initialMode = 'login' }) {
             className="text-[11px] font-semibold text-slate-400 hover:text-purple-600 transition-colors inline-flex items-center space-x-1 cursor-pointer"
           >
             <Shield className="w-3.5 h-3.5 text-purple-500" />
-            <span>Website Creator & Admin Access</span>
+            <span>Admin & Delivery Rider Instant Portals</span>
             <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${showCreatorLogin ? 'rotate-180' : ''}`} />
           </button>
 
           {showCreatorLogin && (
-            <div className="mt-2.5 p-3.5 bg-gradient-to-r from-purple-50 to-indigo-50/60 rounded-2xl border border-purple-200 text-left space-y-2 animate-in fade-in duration-150">
+            <div className="mt-2.5 p-3.5 bg-gradient-to-r from-purple-50 to-indigo-50/60 rounded-2xl border border-purple-200 text-left space-y-2.5 animate-in fade-in duration-150">
               <div className="flex items-center justify-between text-xs font-bold text-purple-950">
                 <span className="flex items-center space-x-1.5">
                   <Shield className="w-3.5 h-3.5 text-purple-600" />
-                  <span>Website Creator / Administrator</span>
+                  <span>Staff & Platform Access</span>
                 </span>
                 <span className="text-[9px] font-bold uppercase tracking-wider bg-purple-200 text-purple-800 px-1.5 py-0.5 rounded">
-                  Admin Only
+                  1-Click Entry
                 </span>
               </div>
-              <p className="text-[11px] text-purple-700 leading-tight">
-                Instant 1-click authentication reserved for the website creator / platform admin.
-              </p>
+
+              {/* Admin Button */}
               <button
                 type="button"
                 onClick={() => handleDemoClick('admin')}
-                className="w-full py-2.5 px-3 bg-white hover:bg-purple-100/70 border border-purple-300 rounded-xl text-xs font-bold text-purple-950 transition-colors cursor-pointer flex items-center justify-between shadow-2xs"
+                className="w-full py-2.5 px-3 bg-white hover:bg-purple-100/70 border border-purple-200 rounded-xl text-xs font-bold text-purple-950 transition-colors cursor-pointer flex items-center justify-between shadow-2xs"
               >
                 <div className="flex items-center space-x-2">
                   <span className="text-base">🛡️</span>
                   <div>
-                    <div className="font-extrabold text-slate-900">Admin Login (Website Creator)</div>
+                    <div className="font-extrabold text-slate-900">Admin Governance Portal</div>
                     <span className="text-[10px] text-purple-600 font-mono font-normal">admin@foodswift.com</span>
                   </div>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-wider bg-purple-600 text-white px-2.5 py-1 rounded-lg">
-                  Instant Login →
+                <span className="text-[10px] font-bold uppercase tracking-wider bg-purple-600 text-white px-2 py-0.5 rounded-lg">
+                  Admin →
+                </span>
+              </button>
+
+              {/* Delivery Rider Button */}
+              <button
+                type="button"
+                onClick={() => handleDemoClick('delivery')}
+                className="w-full py-2.5 px-3 bg-white hover:bg-emerald-50 border border-emerald-200 rounded-xl text-xs font-bold text-emerald-950 transition-colors cursor-pointer flex items-center justify-between shadow-2xs"
+              >
+                <div className="flex items-center space-x-2">
+                  <span className="text-base">🛵</span>
+                  <div>
+                    <div className="font-extrabold text-slate-900">Delivery Rider Fleet</div>
+                    <span className="text-[10px] text-emerald-600 font-mono font-normal">delivery@foodswift.com</span>
+                  </div>
+                </div>
+                <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-600 text-white px-2 py-0.5 rounded-lg">
+                  Rider →
+                </span>
+              </button>
+
+              {/* Restaurant Partner Button */}
+              <button
+                type="button"
+                onClick={() => handleDemoClick('restaurant')}
+                className="w-full py-2.5 px-3 bg-white hover:bg-orange-50 border border-orange-200 rounded-xl text-xs font-bold text-orange-950 transition-colors cursor-pointer flex items-center justify-between shadow-2xs"
+              >
+                <div className="flex items-center space-x-2">
+                  <span className="text-base">👨‍🍳</span>
+                  <div>
+                    <div className="font-extrabold text-slate-900">Restaurant Kitchen Portal</div>
+                    <span className="text-[10px] text-brand-600 font-mono font-normal">partner@foodswift.com</span>
+                  </div>
+                </div>
+                <span className="text-[10px] font-bold uppercase tracking-wider bg-brand-600 text-white px-2 py-0.5 rounded-lg">
+                  Kitchen →
                 </span>
               </button>
             </div>

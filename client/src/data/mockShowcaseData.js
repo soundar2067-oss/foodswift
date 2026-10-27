@@ -1,4 +1,5 @@
 // FoodSwift Mock Showcase Data (Seamless offline fallback for live Vercel deployments)
+
 export const MOCK_RESTAURANTS = [
   {
     _id: 'rest_salem_rr',
@@ -312,6 +313,124 @@ export const MOCK_COUPONS = [
     discountValue: 35,
     maxDiscount: 35,
     minOrderValue: 249,
+  },
+];
+
+export const MOCK_ADMIN_STATS = {
+  totalRestaurants: 210,
+  totalFoods: '2,400+',
+  totalCustomers: 1540,
+  totalOrders: 680,
+  completedOrders: 642,
+  totalRevenue: 284500,
+};
+
+export const MOCK_ADMIN_ORDERS = [
+  {
+    _id: 'ord_adm_1',
+    orderNumber: 'FS-SLM-902144',
+    customer: { name: 'Soundar K', email: 'soundar2100@gmail.com', phone: '9363981970' },
+    restaurant: { name: 'Salem RR Biryani Unavagam', locality: 'Fairlands' },
+    totalAmount: 415,
+    paymentMethod: 'upi_qr',
+    paymentStatus: 'paid',
+    orderStatus: 'out_for_delivery',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    _id: 'ord_adm_2',
+    orderNumber: 'FS-SLM-884210',
+    customer: { name: 'Priya Mohan', email: 'priya@gmail.com', phone: '9842145678' },
+    restaurant: { name: 'Sri Saravana Bhavan Elite', locality: 'Meyyanur' },
+    totalAmount: 245,
+    paymentMethod: 'upi_qr',
+    paymentStatus: 'paid',
+    orderStatus: 'delivered',
+    createdAt: new Date(Date.now() - 3600000).toISOString(),
+  },
+  {
+    _id: 'ord_adm_3',
+    orderNumber: 'FS-SLM-773190',
+    customer: { name: 'Vignesh R', email: 'vicky@gmail.com', phone: '9443212345' },
+    restaurant: { name: 'Selvi Mess (Since 1982)', locality: 'Suramangalam' },
+    totalAmount: 380,
+    paymentMethod: 'cod',
+    paymentStatus: 'pending',
+    orderStatus: 'preparing',
+    createdAt: new Date(Date.now() - 1800000).toISOString(),
+  },
+  {
+    _id: 'ord_adm_4',
+    orderNumber: 'FS-SLM-662900',
+    customer: { name: 'Kavitha S', email: 'kavi@gmail.com', phone: '9789123456' },
+    restaurant: { name: 'Salem Thattuvadai Set Special', locality: 'Gugai' },
+    totalAmount: 110,
+    paymentMethod: 'upi_qr',
+    paymentStatus: 'paid',
+    orderStatus: 'accepted',
+    createdAt: new Date(Date.now() - 900000).toISOString(),
+  },
+];
+
+export const MOCK_DELIVERY_PROFILE = {
+  _id: 'dlv_01',
+  name: 'Karthik S (FoodSwift Fleet)',
+  email: 'delivery@foodswift.com',
+  phone: '+91 94432 00003',
+  vehicleNumber: 'TN 30 BD 5521 (Hero Splendor)',
+  isAvailable: true,
+  rating: 4.9,
+  todayTrips: 8,
+  totalDeliveries: 54,
+  todayEarnings: 420,
+  cashInHand: 380,
+};
+
+export const MOCK_DELIVERY_ORDERS = [
+  {
+    _id: 'ord_dlv_1',
+    orderNumber: 'FS-SLM-902144',
+    deliveryPartner: 'dlv_01',
+    customer: { name: 'Soundar K', phone: '9363981970' },
+    restaurant: {
+      name: 'Salem RR Biryani Unavagam',
+      locality: 'Fairlands',
+      branchAddress: 'Saradha College Main Road, Fairlands, Salem',
+    },
+    deliveryAddress: {
+      houseNo: 'No 45',
+      street: 'Saradha College Road',
+      locality: 'Fairlands, Salem',
+    },
+    totalAmount: 415,
+    paymentMethod: 'upi_qr',
+    paymentStatus: 'paid',
+    isPaid: true,
+    upiTransactionRef: 'UPI9363981970RR',
+    orderStatus: 'out_for_delivery',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    _id: 'ord_dlv_2',
+    orderNumber: 'FS-SLM-884210',
+    deliveryPartner: 'dlv_01',
+    customer: { name: 'Ramesh Babu', phone: '9842199001' },
+    restaurant: {
+      name: 'Sri Saravana Bhavan Elite',
+      locality: 'Meyyanur',
+      branchAddress: 'Meyyanur Bypass, Salem',
+    },
+    deliveryAddress: {
+      houseNo: 'No 12',
+      street: 'Kamarajar Nagar',
+      locality: 'Meyyanur, Salem',
+    },
+    totalAmount: 220,
+    paymentMethod: 'cod',
+    paymentStatus: 'pending',
+    isPaid: false,
+    orderStatus: 'ready_for_pickup',
+    createdAt: new Date(Date.now() - 1200000).toISOString(),
   },
 ];
 

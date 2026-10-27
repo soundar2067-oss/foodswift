@@ -35,7 +35,7 @@ const orderSteps = [
 export default function OrderTrackingPage() {
   const { id } = useParams();
   const { user } = useAuth();
-  const isDeliveryRider = user?.role === 'delivery_partner';
+  const isDeliveryRider = user?.role === 'delivery' || user?.role === 'delivery_partner' || user?.role === 'admin';
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cancelling, setCancelling] = useState(false);

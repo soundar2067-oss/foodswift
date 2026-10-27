@@ -1,5 +1,14 @@
 import axios from 'axios';
-import { MOCK_RESTAURANTS, MOCK_FOODS, MOCK_COUPONS, getMockMenu } from '../data/mockShowcaseData';
+import {
+  MOCK_RESTAURANTS,
+  MOCK_FOODS,
+  MOCK_COUPONS,
+  MOCK_ADMIN_STATS,
+  MOCK_ADMIN_ORDERS,
+  MOCK_DELIVERY_PROFILE,
+  MOCK_DELIVERY_ORDERS,
+  getMockMenu,
+} from '../data/mockShowcaseData';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || '/api/v1',
@@ -35,7 +44,108 @@ api.interceptors.response.use(
       const url = error.config.url || '';
       const method = (error.config.method || 'get').toLowerCase();
 
-      // Mock Showcase Fallback for Restaurants list
+      // ── Admin Portal API Fallbacks ──────────────────────────────
+      if (url.includes('/admin/stats')) {
+        return Promise.resolve({
+          status: 200,
+          data: { success: true, stats: MOCK_ADMIN_STATS },
+        });
+      }
+
+      if (url.includes('/admin/restaurants')) {
+        return Promise.resolve({
+          status: 200,
+          data: { success: true, data: MOCK_RESTAURANTS },
+        });
+      }
+
+      if (url.includes('/admin/orders')) {
+        return Promise.resolve({
+          status: 200,
+          data: {
+            success: true,
+            data: MOCK_ADMIN_ORDERS,
+            total: MOCK_ADMIN_ORDERS.length,
+            page: 1,
+            totalPages: 1,
+          },
+        });
+      }
+
+      if (url.includes('/admin/coupons')) {
+        if (method === 'post') {
+          const body = typeof error.config.data === 'string' ? JSON.parse(error.config.data) : error.config.data || {};
+          const newCoupon = { _id: 'cp_' + Date.now(), ...body };
+          return Promise.resolve({ status: 201, data: { success: true, data: newCoupon } });
+        }
+        return Promise.resolve({
+          status: 200,
+          data: { success: true, data: MOCK_COUPONS },
+        });
+      }
+
+      if (url.includes('/toggle-verification')) {
+        return Promise.resolve({
+          status: 200,
+          data: { success: true, data: { isVerified: true } },
+        });
+      }
+
+      // ── Delivery Rider Fleet Portal API Fallbacks ────────────────
+      if (url.includes('/delivery/profile')) {
+        return Promise.resolve({
+          status: 200,
+          data: { success: true, data: MOCK_DELIVERY_PROFILE },
+        });
+      }
+
+      if (url.includes('/delivery/orders')) {
+        return Promise.resolve({
+          status: 200,
+          data: { success: true, data: MOCK_DELIVERY_ORDERS },
+        });
+      }
+
+      if (url.includes('/delivery/toggle-availability')) {
+        return Promise.resolve({
+          status: 200,
+          data: { success: true, isAvailable: true },
+        });
+      }
+
+      if (url.includes('/delivery/orders/') && (url.includes('/accept') || url.includes('/status'))) {
+        return Promise.resolve({
+          status: 200,
+          data: { success: true, message: 'Order status updated successfully' },
+        });
+      }
+
+      // ── Doorstep UPI QR Code API Fallbacks ────────────────────────
+      if (url.includes('/payments/generate-upi-qr')) {
+        const trRef = 'UPI9443' + Date.now().toString().slice(-6);
+        return Promise.resolve({
+          status: 200,
+          data: {
+            success: true,
+            data: {
+              orderId: 'mock_order',
+              amount: 415,
+              upiString: `upi://pay?pa=foodswift.salem@okaxis&pn=FoodSwift&am=415&cu=INR&tr=${trRef}`,
+              qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=foodswift.salem@okaxis&pn=FoodSwift&am=415&cu=INR&tr=${trRef}`,
+              transactionRef: trRef,
+            },
+          },
+        });
+      }
+
+      if (url.includes('/payments/verify-upi-qr')) {
+        return Promise.resolve({
+          status: 200,
+          data: { success: true, message: 'Doorstep payment verified successfully' },
+        });
+      }
+
+      // ── Customer Restaurants & Menu Fallbacks ───────────────────
       if (url.includes('/restaurants') && !url.includes('/menu')) {
         const idMatch = url.match(/\/restaurants\/([a-zA-Z0-9_-]+)/);
         if (idMatch && idMatch[1] && !idMatch[1].startsWith('?')) {
@@ -58,7 +168,6 @@ api.interceptors.response.use(
         });
       }
 
-      // Mock Showcase Fallback for Menu
       if (url.includes('/menu')) {
         const idMatch = url.match(/\/restaurants\/([a-zA-Z0-9_-]+)\/menu/);
         const reqId = idMatch ? idMatch[1] : null;
@@ -71,7 +180,6 @@ api.interceptors.response.use(
         });
       }
 
-      // Mock Showcase Fallback for Foods
       if (url.includes('/foods')) {
         return Promise.resolve({
           status: 200,
@@ -83,7 +191,6 @@ api.interceptors.response.use(
         });
       }
 
-      // Mock Showcase Fallback for Coupons
       if (url.includes('/coupons')) {
         return Promise.resolve({
           status: 200,
@@ -94,7 +201,7 @@ api.interceptors.response.use(
         });
       }
 
-      // Mock Showcase Fallback for Order Creation
+      // ── Customer Order Creation Fallback ────────────────────────
       if (url.includes('/orders') && method === 'post') {
         const body = typeof error.config.data === 'string' ? JSON.parse(error.config.data) : error.config.data || {};
         const newOrder = {
@@ -150,7 +257,6 @@ api.interceptors.response.use(
           createdAt: new Date().toISOString(),
         };
 
-        // Cache in localStorage for tracking page
         localStorage.setItem(`foodswift_order_${newOrder._id}`, JSON.stringify(newOrder));
         return Promise.resolve({
           status: 201,
@@ -161,7 +267,7 @@ api.interceptors.response.use(
         });
       }
 
-      // Mock Showcase Fallback for Order Tracking fetch
+      // ── Customer Order Tracking Fetch Fallback ──────────────────
       if (url.includes('/orders/')) {
         const orderIdMatch = url.match(/\/orders\/([a-zA-Z0-9_-]+)/);
         const orderId = orderIdMatch ? orderIdMatch[1] : 'latest';
